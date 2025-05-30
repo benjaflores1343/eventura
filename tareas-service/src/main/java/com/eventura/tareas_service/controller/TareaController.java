@@ -24,6 +24,10 @@ public class TareaController {
         return tareaService.listarPorEvento(eventoId);
     }
 
+
+
+    
+
     @PutMapping("/completar/{id}")
     public Tarea completar(@PathVariable Long id) {
         return tareaService.marcarComoCompletada(id);
