@@ -21,8 +21,19 @@ public class PresupuestoService {
         return presupuestoRepository.findByEventoId(eventoId);
     }
 
+    public List<Presupuesto> listarPorEventoYUsuario(Long eventoId, Long usuarioId) {
+        return presupuestoRepository.findByEventoIdAndUsuarioId(eventoId, usuarioId);
+    }
+
     public Double totalGastado(Long eventoId) {
         return presupuestoRepository.findByEventoId(eventoId)
+            .stream()
+            .mapToDouble(Presupuesto::getMonto)
+            .sum();
+    }
+
+    public Double totalGastado(Long eventoId, Long usuarioId) {
+        return presupuestoRepository.findByEventoIdAndUsuarioId(eventoId, usuarioId)
             .stream()
             .mapToDouble(Presupuesto::getMonto)
             .sum();

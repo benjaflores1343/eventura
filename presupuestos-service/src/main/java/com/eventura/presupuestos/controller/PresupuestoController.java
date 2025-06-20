@@ -20,12 +20,23 @@ public class PresupuestoController {
     }
 
     @GetMapping("/evento/{eventoId}")
-    public List<Presupuesto> listar(@PathVariable Long eventoId) {
+    public List<Presupuesto> listar(@PathVariable Long eventoId, @RequestParam(required = false) Long usuarioId) {
+        if (usuarioId != null) {
+            return presupuestoService.listarPorEventoYUsuario(eventoId, usuarioId);
+        }
         return presupuestoService.listarPorEvento(eventoId);
     }
 
     @GetMapping("/total/{eventoId}")
-    public Double total(@PathVariable Long eventoId) {
+    public Double total(@PathVariable Long eventoId, @RequestParam(required = false) Long usuarioId) {
+        if (usuarioId != null) {
+            return presupuestoService.totalGastado(eventoId, usuarioId);
+        }
         return presupuestoService.totalGastado(eventoId);
+    }
+
+    @PutMapping("/modificar")
+    public Presupuesto modificar(@RequestBody Presupuesto presupuesto) {
+        return presupuestoService.guardar(presupuesto);
     }
 }

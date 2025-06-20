@@ -13,6 +13,8 @@ public class Presupuesto {
     private String descripcion;
     private Double monto;
 
+    private Long usuarioId;
+
     public Long getId() {
         return id;
     }
@@ -43,5 +45,13 @@ public class Presupuesto {
 
     public void setMonto(Double monto) {
         this.monto = monto;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }
