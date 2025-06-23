@@ -38,6 +38,13 @@ public class PresupuestoServiceTest {
     }
 
     @Test
+    public void testGuardar_NullPresupuesto() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            presupuestoService.guardar(null);
+        });
+    }
+
+    @Test
     public void testListarPorEvento() {
         Long eventoId = 1L;
         List<Presupuesto> listaMock = Arrays.asList(new Presupuesto(), new Presupuesto());
@@ -46,6 +53,13 @@ public class PresupuestoServiceTest {
         List<Presupuesto> resultado = presupuestoService.listarPorEvento(eventoId);
         assertEquals(2, resultado.size());
         verify(presupuestoRepository, times(1)).findByEventoId(eventoId);
+    }
+
+    @Test
+    public void testListarPorEvento_NullEventoId() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            presupuestoService.listarPorEvento(null);
+        });
     }
 
     @Test
@@ -58,6 +72,13 @@ public class PresupuestoServiceTest {
         List<Presupuesto> resultado = presupuestoService.listarPorEventoYUsuario(eventoId, usuarioId);
         assertEquals(1, resultado.size());
         verify(presupuestoRepository, times(1)).findByEventoIdAndUsuarioId(eventoId, usuarioId);
+    }
+
+    @Test
+    public void testListarPorEventoYUsuario_NullParams() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            presupuestoService.listarPorEventoYUsuario(null, null);
+        });
     }
 
     @Test
@@ -76,6 +97,13 @@ public class PresupuestoServiceTest {
     }
 
     @Test
+    public void testTotalGastadoPorEvento_NullEventoId() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            presupuestoService.totalGastado(null);
+        });
+    }
+
+    @Test
     public void testTotalGastadoPorEventoYUsuario() {
         Long eventoId = 1L;
         Long usuarioId = 2L;
@@ -87,5 +115,12 @@ public class PresupuestoServiceTest {
         Double total = presupuestoService.totalGastado(eventoId, usuarioId);
         assertEquals(150.0, total);
         verify(presupuestoRepository, times(1)).findByEventoIdAndUsuarioId(eventoId, usuarioId);
+    }
+
+    @Test
+    public void testTotalGastadoPorEventoYUsuario_NullParams() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            presupuestoService.totalGastado(null, null);
+        });
     }
 }

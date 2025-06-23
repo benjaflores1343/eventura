@@ -54,6 +54,14 @@ public class PresupuestoControllerTest {
     }
 
     @Test
+    public void testRegistrar_NullBody() throws Exception {
+        mockMvc.perform(post("/api/presupuestos/registrar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(""))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void testListarPorEvento() throws Exception {
         List<Presupuesto> lista = Arrays.asList(presupuesto);
         Mockito.when(presupuestoService.listarPorEvento(1L)).thenReturn(lista);
@@ -61,6 +69,12 @@ public class PresupuestoControllerTest {
         mockMvc.perform(get("/api/presupuestos/evento/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L));
+    }
+
+    @Test
+    public void testListarPorEvento_NullEventoId() throws Exception {
+        mockMvc.perform(get("/api/presupuestos/evento/null"))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
