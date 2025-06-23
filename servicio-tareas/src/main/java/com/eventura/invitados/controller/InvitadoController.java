@@ -3,9 +3,15 @@ package com.eventura.invitados.controller;
 import com.eventura.invitados.model.Invitado;
 import com.eventura.invitados.service.InvitadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/invitados")
@@ -15,17 +21,29 @@ public class InvitadoController {
     private InvitadoService invitadoService;
 
     @PostMapping("/registrar")
-    public Invitado registrar(@RequestBody Invitado invitado) {
-        return invitadoService.guardar(invitado);
+    public EntityModel<Invitado> registrar(@RequestBody Invitado invitado) {
+        Invitado saved = invitadoService.guardar(invitado);
+        return EntityModel.of(saved,
+                WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).registrar(invitado)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).listar(saved.getEventoId())).withRel("listar"));
     }
 
     @GetMapping("/evento/{eventoId}")
-    public List<Invitado> listar(@PathVariable Long eventoId) {
-        return invitadoService.listarPorEvento(eventoId);
+    public CollectionModel<EntityModel<Invitado>> listar(@PathVariable Long eventoId) {
+        List<EntityModel<Invitado>> invitados = invitadoService.listarPorEvento(eventoId).stream()
+                .map(invitado -> EntityModel.of(invitado,
+                        WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).listar(eventoId)).withSelfRel(),
+                        WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).confirmar(invitado.getId())).withRel("confirmar")))
+                .collect(Collectors.toList());
+        return CollectionModel.of(invitados,
+                WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).listar(eventoId)).withSelfRel());
     }
 
     @PutMapping("/confirmar/{id}")
-    public Invitado confirmar(@PathVariable Long id) {
-        return invitadoService.confirmarAsistencia(id);
+    public EntityModel<Invitado> confirmar(@PathVariable Long id) {
+        Invitado invitado = invitadoService.confirmarAsistencia(id);
+        return EntityModel.of(invitado,
+                WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).confirmar(id)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(methodOn(InvitadoController.class).listar(invitado.getEventoId())).withRel("listar"));
     }
 }

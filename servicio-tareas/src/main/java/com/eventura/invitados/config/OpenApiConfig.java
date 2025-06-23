@@ -1,8 +1,9 @@
-package com.eventura.presupuestos.config;
+package com.eventura.invitados.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,10 +15,12 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .servers(List.of(new Server().url("http://localhost:8087")))
+                .servers(List.of(new Server().url("http://localhost:8084")))
                 .info(new Info()
-                        .title("Presupuestos Service API")
+                        .title("Servicio Tareas API")
                         .version("1.0")
-                        .description("Documentación de la API del microservicio de presupuestos"));
+                        .description("Documentación de la API del microservicio de servicio-tareas"));
     }
+
+
 }
