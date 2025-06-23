@@ -1,4 +1,4 @@
-package com.eventura.tareas_service.model;
+    package com.eventura.tareas_service.model;
 
 import jakarta.persistence.*;
 

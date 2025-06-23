@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+import java.util.List;
+
 public interface InvitadoRepository extends JpaRepository<Invitado, Long> {
     Optional<Invitado> findByEmail(String email);
+    List<Invitado> findByEventoId(Long eventoId);
 }

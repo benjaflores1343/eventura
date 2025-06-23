@@ -21,7 +21,10 @@ public class EventController {
     }
 
     @GetMapping
-    public List<Event> getAll() {
+    public List<Event> getAll(@RequestParam(required = false) Long usuarioId) {
+        if (usuarioId != null) {
+            return eventService.findByUsuarioId(usuarioId);
+        }
         return eventService.findAll();
     }
 

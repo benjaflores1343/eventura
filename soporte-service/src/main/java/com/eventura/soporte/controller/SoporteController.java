@@ -20,8 +20,12 @@ public class SoporteController {
     }
 
     @GetMapping("/evento/{eventoId}")
-    public List<Soporte> listar(@PathVariable Long eventoId) {
-        return soporteService.listarPorEvento(eventoId);
+    public List<Soporte> listar(@PathVariable Long eventoId, @RequestParam(required = false) Long usuarioId) {
+        if (usuarioId != null) {
+            return soporteService.listarPorEventoYUsuario(eventoId, usuarioId);
+        } else {
+            return soporteService.listarPorEvento(eventoId);
+        }
     }
 
     @PutMapping("/estado/{id}")

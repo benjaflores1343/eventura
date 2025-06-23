@@ -48,4 +48,9 @@ public class InvitadoController {
         Invitado invitadoActualizado = invitadoService.actualizarPerfil(invitado);
         return new ResponseEntity<>(invitadoActualizado, HttpStatus.OK);
     }
+
+    @GetMapping("/evento/{eventoId}")
+    public ResponseEntity<?> listarPorEvento(@PathVariable Long eventoId) {
+        return ResponseEntity.ok(invitadoService.listarPorEvento(eventoId));
+    }
 }

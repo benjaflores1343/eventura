@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class InvitadoService {
@@ -36,5 +37,9 @@ public class InvitadoService {
 
     public Optional<Invitado> obtenerPorId(Long id) {
         return invitadoRepository.findById(id);
+    }
+
+    public List<Invitado> listarPorEvento(Long eventoId) {
+        return invitadoRepository.findByEventoId(eventoId);
     }
 }

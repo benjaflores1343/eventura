@@ -21,6 +21,10 @@ public class EventService {
         return eventRepository.findAll();
     }
 
+    public List<Event> findByUsuarioId(Long usuarioId) {
+        return eventRepository.findByOrganizerId(usuarioId.toString());
+    }
+
     public Event findById(Long id) {
         return eventRepository.findById(id).orElse(null);
     }

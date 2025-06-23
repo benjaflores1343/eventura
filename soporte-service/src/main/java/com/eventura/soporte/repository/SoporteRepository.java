@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SoporteRepository extends JpaRepository<Soporte, Long> {
     List<Soporte> findByEventoId(Long eventoId);
+    List<Soporte> findByEventoIdAndUsuarioId(Long eventoId, Long usuarioId);
 }

@@ -21,6 +21,10 @@ public class SoporteService {
         return soporteRepository.findByEventoId(eventoId);
     }
 
+    public List<Soporte> listarPorEventoYUsuario(Long eventoId, Long usuarioId) {
+        return soporteRepository.findByEventoIdAndUsuarioId(eventoId, usuarioId);
+    }
+
     public Soporte actualizarEstado(Long id, String estado) {
         Soporte soporte = soporteRepository.findById(id).orElse(null);
         if (soporte != null) {
