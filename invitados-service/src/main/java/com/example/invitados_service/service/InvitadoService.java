@@ -39,7 +39,7 @@ public class InvitadoService {
         return invitadoRepository.findById(id);
     }
 
-    public List<Invitado> listarPorEvento(Long eventoId) {
-        return invitadoRepository.findByEventoId(eventoId);
-    }
+    // Eliminado método listarPorEvento porque la entidad Invitado no tiene propiedad eventoId
+    // public List<Invitado> listarPorEvento(Long eventoId) {
+    //     return invitadoRepository.findByEventoId(eventoId);
 }

@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface InvitadoRepository extends JpaRepository<Invitado, Long> {
     Optional<Invitado> findByEmail(String email);
-    List<Invitado> findByEventoId(Long eventoId);
+    // Eliminado método findByEventoId porque la entidad Invitado no tiene propiedad eventoId
+    // List<Invitado> findByEventoId(Long eventoId);
 }
